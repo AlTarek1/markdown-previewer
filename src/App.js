@@ -1,48 +1,49 @@
-import './App.css';
-import React, {useState} from 'react';
-import {marked} from 'marked'
+import "./App.css";
+import React from "react";
+import { marked } from "marked";
+import useLocalStorage from "./customhooks/useLocalStoarge";
+import Doc from "./components/Doc";
 
 const App = () => {
-  const [code, setCode] = useState('## Hello')
-  const [compiled, setCompiled] = useState('<h2 id="hello">Hello</h2>')
-  const [hide, hidePreview] = useState(true)
-
-  const openMD = () => {
-    console.log(0)
-    hidePreview(true)
-  }
-
-  const openPreview = () => {
-    console.log(0)
-    hidePreview(false)
-  }
-
+  const [code, setCode] = useLocalStorage("code", "## Hello");
+  const [compiled, setCompiled] = useLocalStorage(
+    "compiled",
+    '<h2 id="hello">Hello</h2>'
+  );
+  const [hide, setHide] = useLocalStorage("hide", 0);
+  const handleHide = (number) => {
+    setHide(number);
+  };
   const handleChange = (e) => {
-    setCode(e.target.value)
-    setCompiled(marked.parse(e.target.value))
-  }
+    setCode(e.target.value);
+    setCompiled(marked.parse(e.target.value));
+  };
 
   return (
     <>
       <h1>MarkDown Previewer React App</h1>
       <div className="container">
         <div className="btns">
-          <button onClick={openMD} className="btn">MarkDown</button>
-          <button onClick={openPreview}>Preview</button>
+          <button onClick={() => handleHide(0)} className="btn">
+            MarkDown
+          </button>
+          <button onClick={() => handleHide(1)}>Preview</button>
+          <button onClick={() => handleHide(2)}>Docs</button>
         </div>
-        {
-        hide ? 
+        {hide === 0 ? (
           <div>
-            <textarea onChange={handleChange} value={code}/>
-          </div> : 
-          <div>
-            <textarea value={compiled}/>
+            <textarea onChange={handleChange} value={code} />
           </div>
-        }
+        ) : hide === 1 ? (
+          <div>
+            <textarea readOnly value={compiled} />
+          </div>
+        ) : (
+          <Doc />
+        )}
       </div>
     </>
-  )
-}
-
+  );
+};
 
 export default App;
