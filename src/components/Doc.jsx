@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
+import data from "./data.json";
 const Doc = () => {
-  const url = "/api/v1/basic-syntax.json";
-  const [data, setData] = useState([]);
+  // const url = "/api/v1/basic-syntax.json";
+  // const [data, setData] = useState([]);
 
-  const fetchInfo = () => {
-    return fetch(url)
-      .then((res) => res.json())
-      .then((d) => {
-        setData(d);
-        console.log(d);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const fetchInfo = () => {
+  //   return fetch(url)
+  //     .then((res) => res.json())
+  //     .then((d) => {
+  //       setData(d);
+  //       console.log(d);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
-  useEffect(() => {
-    fetchInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchInfo();
+  // }, []);
 
   return (
     <div className="doc">
